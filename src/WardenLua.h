@@ -4,6 +4,7 @@
 #include "ScriptMgr.h"
 #include "ChatCommand.h"
 #include "Chat.h"
+#include "Player.h"
 
 #include <Warden.h>
 #include <WardenWin.h>

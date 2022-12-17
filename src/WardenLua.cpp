@@ -18,10 +18,17 @@ ChatCommandTable WardenLuaCommands::GetCommands() const
 
 bool WardenLuaCommands::HandleWLPayload(ChatHandler* handler, std::string payload)
 {
+    auto player = handler->GetPlayer();
+    if (player)
+    {
+        handler->SendSysMessage("You can only use this commands from ingame.");
+        return false;
+    }
+
     handler->SendSysMessage(Acore::StringFormatFmt("Hello World!, Payload: {}", payload));
 
     auto warden = WardenWin::GetInstance();
-    warden->SendLuaPayload(payload);
+    warden->SendLuaPayload(player->GetSession(), payload);
 
     return true;
 }
