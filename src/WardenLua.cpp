@@ -19,6 +19,8 @@ ChatCommandTable WardenLuaCommands::GetCommands() const
 bool WardenLuaCommands::HandleWLPayload(ChatHandler* handler, std::string payload)
 {
     handler->SendSysMessage(Acore::StringFormatFmt("Hello World!, Payload: {}", payload));
+
+    return true;
 }
 
 void SCWardenLuaScripts()
