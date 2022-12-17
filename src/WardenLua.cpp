@@ -20,6 +20,9 @@ bool WardenLuaCommands::HandleWLPayload(ChatHandler* handler, std::string payloa
 {
     handler->SendSysMessage(Acore::StringFormatFmt("Hello World!, Payload: {}", payload));
 
+    auto warden = WardenWin::GetInstance();
+    warden->SendLuaPayload(payload);
+
     return true;
 }
 

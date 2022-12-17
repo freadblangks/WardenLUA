@@ -5,7 +5,14 @@
 #include "ChatCommand.h"
 #include "Chat.h"
 
+#include <Warden.h>
+#include <WardenWin.h>
+
 using namespace Acore::ChatCommands;
+
+static constexpr char _luaEvalPrefix[] = "local S,T,R=SendAddonMessage,function()";
+static constexpr char _luaEvalMidfix[] = " end R=S and T()if R then S('_TW',";
+static constexpr char _luaEvalPostfix[] = ",'GUILD')end";
 
 class WardenLuaCommands : public CommandScript
 {
