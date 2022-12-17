@@ -23,7 +23,7 @@ bool WardenLuaCommands::HandleWLPayload(ChatHandler* handler, std::string payloa
     return true;
 }
 
-void SCWardenLuaScripts()
+void AddSCWardenLUAScripts()
 {
     new WardenLuaCommands();
 }

@@ -3,13 +3,13 @@
  */
 
 // From SC
-void SCWardenLuaScripts();
+void AddSCWardenLUAScripts();
 
 // Add all
 // cf. the naming convention https://github.com/azerothcore/azerothcore-wotlk/blob/master/doc/changelog/master.md#how-to-upgrade-4
 // additionally replace all '-' in the module folder name with '_' here
-void AddWardenLuaScripts()
+void AddWardenLUAScripts()
 {
-    SCWardenLuaScripts();
+    AddSCWardenLUAScripts();
 }
 
