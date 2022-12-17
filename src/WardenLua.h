@@ -13,7 +13,7 @@ public:
     WardenLuaCommands() : CommandScript("WardenLuaCommands") { }
 
     ChatCommandTable GetCommands() const override;
-    bool HandleWLPayload(ChatHandler* handler, std::string payload);
+    static bool HandleWLPayload(ChatHandler* handler, std::string payload);
 };
 
 #endif //MODULE_WARDENLUA_H
