@@ -1,29 +1,27 @@
-/*
- * Copyright (C) 2016+ AzerothCore <www.azerothcore.org>, released under GNU AGPL v3 license: https://github.com/azerothcore/azerothcore-wotlk/blob/master/LICENSE-AGPL3
- */
+#include "WardenLua.h"
 
-#include "ScriptMgr.h"
-#include "Player.h"
-#include "Config.h"
-#include "Chat.h"
-
-// Add player scripts
-class MyPlayer : public PlayerScript
+ChatCommandTable WardenLuaCommands::GetCommands() const
 {
-public:
-    MyPlayer() : PlayerScript("MyPlayer") { }
-
-    void OnLogin(Player* player) override
+    static ChatCommandTable sbCommandTable =
     {
-        if (sConfigMgr->GetOption<bool>("MyModule.Enable", false))
-        {
-            ChatHandler(player->GetSession()).SendSysMessage("Hello World from Skeleton-Module!");
-        }
-    }
-};
+        { "payload", HandleWLPayload, SEC_ADMINISTRATOR, Console::No }
+    };
 
-// Add all scripts in one
-void AddMyPlayerScripts()
+    static ChatCommandTable commandTable =
+    {
+        { "wl", sbCommandTable }
+    };
+
+    return commandTable;
+}
+
+
+bool WardenLuaCommands::HandleWLPayload(ChatHandler* handler, std::string payload)
 {
-    new MyPlayer();
+    handler->SendSysMessage("Hello World!");
+}
+
+void SCWardenLuaScripts()
+{
+    new WardenLuaCommands();
 }
