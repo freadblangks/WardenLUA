@@ -19,9 +19,10 @@ ChatCommandTable WardenLuaCommands::GetCommands() const
 bool WardenLuaCommands::HandleWLPayload(ChatHandler* handler, std::string payload)
 {
     auto player = handler->GetPlayer();
-    if (player)
+    if (!player)
     {
         handler->SendSysMessage("You can only use this commands from ingame.");
+        handler->SetSentErrorMessage(true);
         return false;
     }
 
