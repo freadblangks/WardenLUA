@@ -24,7 +24,7 @@ public:
     static bool HandleWLPayload(ChatHandler* handler, std::string payload);
     static bool HandleWLCPayload(ChatHandler* handler);
 private:
-    inline static uint32 payloadId= 44111;
+    inline static uint32 payloadId= 4411;
 };
 
 #endif //MODULE_WARDENLUA_H
