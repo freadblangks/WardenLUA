@@ -41,7 +41,7 @@ class WardenLuaServerScript : public ServerScript
 {
 public:
     WardenLuaServerScript() : ServerScript("WardenLuaServerScript") { }
-    bool CanPacketReceive(WorldSession* session, WorldPacket const& packet);
+    bool CanPacketReceive(WorldSession* /*session*/, WorldPacket& /*packet*/);
 };
 
 #endif //MODULE_WARDENLUA_H
