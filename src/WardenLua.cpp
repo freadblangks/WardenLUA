@@ -31,7 +31,6 @@ void SendPayload(WorldSession* session, uint32 payloadId, std::string payload)
         return;
     }
 
-    wardenWin->RequestChecks();
     wardenWin->QueueLuaPayload(payloadId, payload);
     wardenWin->RequestChecks();
 }
