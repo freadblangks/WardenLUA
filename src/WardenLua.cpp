@@ -31,8 +31,7 @@ void SendPayload(WorldSession* session, uint32 payloadId, std::string payload)
         return;
     }
 
-    wardenWin->QueueLuaPayload(payloadId, Acore::StringFormatFmt("{};return 0;", payload));
-    wardenWin->RequestChecks();
+    wardenWin->QueueLuaPayload(payloadId, Acore::StringFormatFmt("{};return false;", payload));
 }
 
 bool WardenLuaCommands::HandleWLCPayload(ChatHandler* handler)
