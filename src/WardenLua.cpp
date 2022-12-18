@@ -81,9 +81,9 @@ void WardenLuaPlayerScript::OnLogin(Player* player)
     SendPayload(player, 800, payload);
 }
 
-bool WardenLuaServerScript::CanPacketReceive(WorldSession* /*session*/, WorldPacket& /*packet*/)
+bool WardenLuaServerScript::CanPacketReceive(WorldSession* /*session*/, WorldPacket& packet)
 {
-    LOG_INFO("module", "Hello World!");
+    LOG_INFO("module", "Received packet type: {}", packet.GetOpcode());
 
     return true;
 }
