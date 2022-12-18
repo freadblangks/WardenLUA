@@ -42,7 +42,7 @@ bool WardenLuaCommands::HandleWLCPayload(ChatHandler* handler)
     }
 
     wardenWin->RequestChecks();
-    wardenWin->SendLuaPayload(800, payload);
+    wardenWin->QueueLuaPayload(800, payload);
 
     return true;
 }
@@ -71,7 +71,7 @@ bool WardenLuaCommands::HandleWLPayload(ChatHandler* handler, std::string payloa
         return false;
     }
 
-    wardenWin->SendLuaPayload(payloadId, payload);
+    wardenWin->QueueLuaPayload(payloadId, payload);
     payloadId++;
 
     return true;
@@ -93,7 +93,7 @@ void WardenLuaPlayerScript::OnLogin(Player* player)
     }
 
     std::string payload = "message('Welcome to the server!|n|n|cffffffffEnjoy your stay.'); return false;";
-    wardenWin->SendLuaPayload(800, payload);
+    wardenWin->QueueLuaPayload(800, payload);
 }
 
 void AddSCWardenLUAScripts()
