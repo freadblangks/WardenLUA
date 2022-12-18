@@ -27,4 +27,11 @@ private:
     inline static uint32 payloadId= 4411;
 };
 
+class WardenLuaPlayerScript : public PlayerScript
+{
+public:
+    WardenLuaPlayerScript() : PlayerScript("WardenLuaPlayerScript") { }
+    void OnLogin(Player* /*player*/) override;
+};
+
 #endif //MODULE_WARDENLUA_H
