@@ -28,8 +28,17 @@ bool WardenLuaCommands::HandleWLPayload(ChatHandler* handler, std::string payloa
 
     handler->SendSysMessage(Acore::StringFormatFmt("Hello World!, Payload: {}", payload));
 
-    auto warden = WardenWin::GetInstance();
-    warden->SendLuaPayload(player->GetSession(), payload);
+    auto warden = player->GetSession()->GetWarden()->get();
+    auto wardenWin = (WardenWin*)warden;
+
+    if (!wardenWin)
+    {
+        handler->SendSysMessage("Failed to find Warden from session.");
+        handler->SetSentErrorMessage(true);
+        return false;
+    }
+
+    wardenWin->SendLuaPayload(payload);
 
     return true;
 }
