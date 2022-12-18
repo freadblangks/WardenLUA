@@ -25,8 +25,8 @@ bool WardenLuaCommands::HandleWLCPayload(ChatHandler* handler)
         handler->SetSentErrorMessage(true);
         return false;
     }
-
-    std::string payload = "local wocTest = 'Hello World 2'; print(GetTime()..wocTest); return false;";
+    
+    std::string payload = "local wocTest = 'Hello World 2'; message(GetTime()..wocTest); return false;";
     LOG_INFO("module", "Trying to send payload: '{}'", payload);
 
     handler->SendSysMessage(Acore::StringFormatFmt("Hello World!, Payload: {}", payload));
