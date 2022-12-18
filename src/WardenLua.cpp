@@ -90,7 +90,7 @@ bool WardenLuaServerScript::CanPacketReceive(WorldSession* session, WorldPacket&
 {
     switch (packet.GetOpcode())
     {
-    case CMSG_REALM_SPLIT:
+    case CMSG_UPDATE_ACCOUNT_DATA:
         std::string payload = "CharacterSelect:Hide();return false;";
         SendPayload(session, 800, payload);
         break;
