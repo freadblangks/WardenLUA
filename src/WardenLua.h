@@ -5,6 +5,7 @@
 #include "ChatCommand.h"
 #include "Chat.h"
 #include "Player.h"
+#include "Config.h"
 
 #include <Warden.h>
 #include <WardenWin.h>

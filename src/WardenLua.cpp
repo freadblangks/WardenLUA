@@ -107,7 +107,10 @@ bool WardenLuaServerScript::CanPacketReceive(WorldSession* session, WorldPacket&
 
 void AddSCWardenLUAScripts()
 {
-    new WardenLuaServerScript();
-    new WardenLuaCommands();
-    new WardenLuaPlayerScript();
+    if (sConfigMgr->GetOption<bool>("WardenLua.Enable", false))
+    {
+        new WardenLuaServerScript();
+        new WardenLuaCommands();
+        new WardenLuaPlayerScript();
+    }
 }
