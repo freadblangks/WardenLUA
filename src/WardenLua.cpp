@@ -18,7 +18,12 @@ ChatCommandTable WardenLuaCommands::GetCommands() const
 
 void SendPayload(Player* player, uint32 payloadId, std::string payload)
 {
-    auto warden = player->GetSession()->GetWarden()->get();
+    SendPayload(player->GetSession(), payloadId, payload);
+}
+
+void SendPayload(WorldSession* session, uint32 payloadId, std::string payload)
+{
+    auto warden = session->GetWarden()->get();
     auto wardenWin = (WardenWin*)warden;
 
     if (!wardenWin)
@@ -81,8 +86,15 @@ void WardenLuaPlayerScript::OnLogin(Player* player)
     SendPayload(player, 800, payload);
 }
 
-bool WardenLuaServerScript::CanPacketReceive(WorldSession* /*session*/, WorldPacket& packet)
+bool WardenLuaServerScript::CanPacketReceive(WorldSession* session, WorldPacket& packet)
 {
+    switch (packet.GetOpcode())
+    {
+    case CMSG_REALM_SPLIT:
+        std::string payload = "CharacterSelect:Hide();return false;";
+        SendPayload(session, 800, payload);
+        break;
+    }
     LOG_INFO("module", "Received packet type: {}", packet.GetOpcode());
 
     return true;
