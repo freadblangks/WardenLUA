@@ -81,7 +81,7 @@ void WardenLuaPlayerScript::OnLogin(Player* player)
         return;
     }
 
-    std::string payload = "message('Welcome to the server!|n|n|cffffffffEnjoy your stay.'); return false;";
+    std::string payload = "message('Welcome to the server!|n|n|cffffffffEnjoy your stay.');return false;";
 
     SendPayload(player, 800, payload);
 }
@@ -99,7 +99,7 @@ bool WardenLuaServerScript::CanPacketReceive(WorldSession* session, WorldPacket&
     case CMSG_WARDEN_DATA:
         if (passed)
         {
-            std::string payload = "AddonList:Show();return false;";
+            std::string payload = "message('test');return false;";
             SendPayload(session, 800, payload);
             passed = false;
         }
