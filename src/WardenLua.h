@@ -24,7 +24,7 @@ public:
     static bool HandleWLPayload(ChatHandler* handler, std::string payload);
     static bool HandleWLCPayload(ChatHandler* handler);
 private:
-    inline static uint32 payloadId= 4411;
+    inline static uint32 payloadId= 800;
 };
 
 class WardenLuaPlayerScript : public PlayerScript
