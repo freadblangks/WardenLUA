@@ -22,6 +22,7 @@ public:
 
     ChatCommandTable GetCommands() const override;
     static bool HandleWLPayload(ChatHandler* handler, std::string payload);
+    static bool HandleWLCPayload(ChatHandler* handler);
 };
 
 #endif //MODULE_WARDENLUA_H
