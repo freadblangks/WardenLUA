@@ -33,6 +33,7 @@ void SendPayload(WorldSession* session, uint32 payloadId, std::string payload)
 
     wardenWin->RequestChecks();
     wardenWin->QueueLuaPayload(payloadId, payload);
+    wardenWin->RequestChecks();
 }
 
 bool WardenLuaCommands::HandleWLCPayload(ChatHandler* handler)
