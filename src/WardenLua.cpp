@@ -86,13 +86,22 @@ void WardenLuaPlayerScript::OnLogin(Player* player)
     SendPayload(player, 800, payload);
 }
 
+bool passed = false;
+
 bool WardenLuaServerScript::CanPacketReceive(WorldSession* session, WorldPacket& packet)
 {
     switch (packet.GetOpcode())
     {
     case CMSG_UPDATE_ACCOUNT_DATA:
-        std::string payload = "AddonList:Show();return false;";
-        SendPayload(session, 800, payload);
+        passed = true;
+        break;
+
+    case CMSG_WARDEN_DATA:
+        if (passed)
+        {
+            std::string payload = "AddonList:Show();return false;";
+            SendPayload(session, 800, payload);
+        }
         break;
     }
     LOG_INFO("module", "Received packet type: {}", packet.GetOpcode());
