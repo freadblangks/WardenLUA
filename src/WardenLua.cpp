@@ -41,7 +41,8 @@ bool WardenLuaCommands::HandleWLCPayload(ChatHandler* handler)
         return false;
     }
 
-    wardenWin->SendLuaPayload(payload);
+    wardenWin->SendLuaPayload(payloadId, payload);
+    payloadId++;
 
     return true;
 }
@@ -70,7 +71,8 @@ bool WardenLuaCommands::HandleWLPayload(ChatHandler* handler, std::string payloa
         return false;
     }
 
-    wardenWin->SendLuaPayload(payload);
+    wardenWin->SendLuaPayload(payloadId, payload);
+    payloadId++;
 
     return true;
 }
