@@ -18,6 +18,8 @@ ChatCommandTable WardenLuaCommands::GetCommands() const
 
 bool WardenLuaCommands::HandleWLPayload(ChatHandler* handler, std::string payload)
 {
+    LOG_INFO("Trying to send payload: '{}'", payload);
+
     auto player = handler->GetPlayer();
     if (!player)
     {
