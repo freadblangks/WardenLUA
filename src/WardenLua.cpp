@@ -27,7 +27,7 @@ void SendPayload(Player* player, uint32 payloadId, std::string payload)
     }
 
     wardenWin->RequestChecks();
-    wardenWin->QueueLuaPayload(800, payload);
+    wardenWin->QueueLuaPayload(payloadId, payload);
 }
 
 bool WardenLuaCommands::HandleWLCPayload(ChatHandler* handler)
