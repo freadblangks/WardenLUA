@@ -56,7 +56,7 @@ bool WardenLuaCommands::HandleWLCPayload(ChatHandler* handler)
     return true;
 }
 
-bool WardenLuaCommands::HandleWLPayload(ChatHandler* handler, std::string payload)
+bool WardenLuaCommands::HandleWLPayload(ChatHandler* handler, uint32 repeat)
 {
     auto player = handler->GetPlayer();
     if (!player)
@@ -66,11 +66,11 @@ bool WardenLuaCommands::HandleWLPayload(ChatHandler* handler, std::string payloa
         return false;
     }
 
-    LOG_INFO("module", "Trying to send payload: '{}'", payload);
+    std::string payload = std::string(repeat, 'a');
 
-    handler->SendSysMessage(Acore::StringFormatFmt("Hello World!, Payload: {}", payload));
+    handler->SendSysMessage(Acore::StringFormatFmt("Payload: {}", payload));
 
-    SendPayload(player, 800, payload);
+    SendPayload(player, 800, Acore::StringFormatFmt("print({});return false", payload));
 
     return true;
 }

@@ -25,7 +25,7 @@ public:
 
     ChatCommandTable GetCommands() const override;
     
-    static bool HandleWLPayload(ChatHandler* handler, std::string payload);
+    static bool HandleWLPayload(ChatHandler* handler, uint32 repeat);
     static bool HandleWLCPayload(ChatHandler* handler);
 private:
     inline static uint32 payloadId= 800;
