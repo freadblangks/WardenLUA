@@ -70,7 +70,7 @@ bool WardenLuaCommands::HandleWLPayload(ChatHandler* handler, uint32 repeat)
 
     handler->SendSysMessage(Acore::StringFormatFmt("Payload: {}", payload));
 
-    SendPayload(player, 800, Acore::StringFormatFmt("print({});return false", payload));
+    SendPayload(player, 800, Acore::StringFormatFmt("print('{}');return false", payload));
 
     return true;
 }
