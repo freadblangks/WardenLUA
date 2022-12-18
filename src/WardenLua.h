@@ -37,4 +37,11 @@ public:
     void OnLogin(Player* /*player*/) override;
 };
 
+class WardenLuaServerScript : public ServerScript
+{
+public:
+    WardenLuaServerScript() : ServerScript("WardenLuaServerScript") { }
+    bool CanPacketReceive(WorldSession* session, WorldPacket const& packet);
+};
+
 #endif //MODULE_WARDENLUA_H
