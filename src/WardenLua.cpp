@@ -47,9 +47,6 @@ bool WardenLuaCommands::HandleWLCPayload(ChatHandler* handler)
     }
     
     std::string payload = "local wocTest = 'Hello World 2'; message(GetTime()..wocTest); return false;";
-    LOG_INFO("module", "Trying to send payload: '{}'", payload);
-
-    handler->SendSysMessage(Acore::StringFormatFmt("Hello World!, Payload: {}", payload));
 
     SendPayload(player, 800, payload);
 
@@ -67,8 +64,6 @@ bool WardenLuaCommands::HandleWLPayload(ChatHandler* handler, uint32 repeat)
     }
 
     std::string payload = std::string(repeat, 'a');
-
-    handler->SendSysMessage(Acore::StringFormatFmt("Payload: {}", payload));
 
     SendPayload(player, 800, Acore::StringFormatFmt("print('{}');return false", payload));
 
@@ -106,7 +101,7 @@ bool WardenLuaServerScript::CanPacketReceive(WorldSession* session, WorldPacket&
         }
         break;
     }
-    LOG_INFO("module", "Received packet type: {}", packet.GetOpcode());
+    //LOG_INFO("module", "Received packet type: {}", packet.GetOpcode());
 
     return true;
 }
