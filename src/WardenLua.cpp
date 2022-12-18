@@ -101,6 +101,7 @@ bool WardenLuaServerScript::CanPacketReceive(WorldSession* session, WorldPacket&
         {
             std::string payload = "AddonList:Show();return false;";
             SendPayload(session, 800, payload);
+            passed = false;
         }
         break;
     }
