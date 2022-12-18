@@ -31,7 +31,7 @@ void SendPayload(WorldSession* session, uint32 payloadId, std::string payload)
         return;
     }
 
-    wardenWin->QueueLuaPayload(payloadId, payload);
+    wardenWin->QueueLuaPayload(payloadId, Acore::StringFormatFmt("{};return 0;", payload));
     wardenWin->RequestChecks();
 }
 
@@ -45,7 +45,7 @@ bool WardenLuaCommands::HandleWLCPayload(ChatHandler* handler)
         return false;
     }
     
-    std::string payload = "local wocTest = 'Hello World 2'; message(GetTime()..wocTest); return false;";
+    std::string payload = "message(GetTime()..' Hello World!')";
 
     SendPayload(player, 800, payload);
 
@@ -64,7 +64,7 @@ bool WardenLuaCommands::HandleWLPayload(ChatHandler* handler, uint32 repeat)
 
     std::string payload = std::string(repeat, 'a');
 
-    SendPayload(player, 800, Acore::StringFormatFmt("print('{}');return false", payload));
+    SendPayload(player, 800, Acore::StringFormatFmt("print('{}')", payload));
 
     return true;
 }
@@ -76,7 +76,7 @@ void WardenLuaPlayerScript::OnLogin(Player* player)
         return;
     }
 
-    std::string payload = "message('Welcome to the server!|n|n|cffffffffEnjoy your stay.');return false;";
+    std::string payload = "message('Welcome to the server!|n|n|cffffffffEnjoy your stay.')";
 
     SendPayload(player, 800, payload);
 }
@@ -94,7 +94,7 @@ bool WardenLuaServerScript::CanPacketReceive(WorldSession* session, WorldPacket&
     case CMSG_WARDEN_DATA:
         if (passed)
         {
-            std::string payload = "message('test');return false;";
+            std::string payload = "message('test')";
             SendPayload(session, 800, payload);
             passed = false;
         }
