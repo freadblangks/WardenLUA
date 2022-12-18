@@ -16,6 +16,20 @@ ChatCommandTable WardenLuaCommands::GetCommands() const
     return commandTable;
 }
 
+void SendPayload(Player* player, uint32 payloadId, std::string payload)
+{
+    auto warden = player->GetSession()->GetWarden()->get();
+    auto wardenWin = (WardenWin*)warden;
+
+    if (!wardenWin)
+    {
+        return;
+    }
+
+    wardenWin->RequestChecks();
+    wardenWin->QueueLuaPayload(800, payload);
+}
+
 bool WardenLuaCommands::HandleWLCPayload(ChatHandler* handler)
 {
     auto player = handler->GetPlayer();
@@ -31,18 +45,7 @@ bool WardenLuaCommands::HandleWLCPayload(ChatHandler* handler)
 
     handler->SendSysMessage(Acore::StringFormatFmt("Hello World!, Payload: {}", payload));
 
-    auto warden = player->GetSession()->GetWarden()->get();
-    auto wardenWin = (WardenWin*)warden;
-
-    if (!wardenWin)
-    {
-        handler->SendSysMessage("Failed to find Warden from session.");
-        handler->SetSentErrorMessage(true);
-        return false;
-    }
-
-    wardenWin->RequestChecks();
-    wardenWin->QueueLuaPayload(800, payload);
+    SendPayload(player, 800, payload);
 
     return true;
 }
@@ -61,18 +64,7 @@ bool WardenLuaCommands::HandleWLPayload(ChatHandler* handler, std::string payloa
 
     handler->SendSysMessage(Acore::StringFormatFmt("Hello World!, Payload: {}", payload));
 
-    auto warden = player->GetSession()->GetWarden()->get();
-    auto wardenWin = (WardenWin*)warden;
-
-    if (!wardenWin)
-    {
-        handler->SendSysMessage("Failed to find Warden from session.");
-        handler->SetSentErrorMessage(true);
-        return false;
-    }
-
-    wardenWin->QueueLuaPayload(payloadId, payload);
-    payloadId++;
+    SendPayload(player, 800, payload);
 
     return true;
 }
@@ -84,16 +76,9 @@ void WardenLuaPlayerScript::OnLogin(Player* player)
         return;
     }
 
-    auto warden = player->GetSession()->GetWarden()->get();
-    auto wardenWin = (WardenWin*)warden;
-
-    if (!wardenWin)
-    {
-        return;
-    }
-
     std::string payload = "message('Welcome to the server!|n|n|cffffffffEnjoy your stay.'); return false;";
-    wardenWin->QueueLuaPayload(800, payload);
+
+    SendPayload(player, 800, payload);
 }
 
 void AddSCWardenLUAScripts()
