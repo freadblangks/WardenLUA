@@ -91,7 +91,7 @@ void WardenLuaPlayerScript::OnLogin(Player* player)
         return;
     }
 
-    std::string payload = "message('Welcome to the server!|n|n|cffffffffEnjoy your stay.')";
+    std::string payload = "WorldFrame:RegisterEvent(\"CHAT_MSG_ADDON\")WorldFrame:SetScript(\"OnEvent\",function(self,b,...)if b==\"CHAT_MSG_ADDON\"then a=...print(a)end end)";
 
     SendPayload(player, 800, payload);
 }
@@ -110,7 +110,7 @@ bool WardenLuaServerScript::CanPacketReceive(WorldSession* session, WorldPacket&
         if (passed)
         {
             std::string payload = "message('test')";
-            SendPayload(session, 800, payload);
+            //SendPayload(session, 800, payload);
             passed = false;
         }
         break;
