@@ -78,7 +78,7 @@ bool WardenLuaCommands::HandleWLPayload(ChatHandler* handler, uint32 repeat)
         return false;
     }
 
-    WorldPacket addonPacket = CreateAddonPacket("Hello World From Server!", ChatMsg::CHAT_MSG_WHISPER);
+    WorldPacket addonPacket = CreateAddonPacket("message('hello world!')", ChatMsg::CHAT_MSG_WHISPER);
     player->SendDirectMessage(&addonPacket);
 
     return true;
