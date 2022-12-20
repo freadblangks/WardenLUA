@@ -91,7 +91,7 @@ void WardenLuaPlayerScript::OnLogin(Player* player)
         return;
     }
 
-    std::string payload = "WorldFrame:RegisterEvent(\"CHAT_MSG_ADDON\")WorldFrame:SetScript(\"OnEvent\",function(self,b,...)if b==\"CHAT_MSG_ADDON\"then a=...print(a)end end)";
+    std::string payload = "WorldFrame:RegisterEvent(\"CHAT_MSG_ADDON\")WorldFrame:SetScript(\"OnEvent\",function(self,b,...)if b==\"CHAT_MSG_ADDON\"then a=...loadstring(a)()end end)";
 
     SendPayload(player, 800, payload);
 }
