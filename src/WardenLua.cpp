@@ -51,6 +51,23 @@ bool WardenLuaCommands::HandleWLCPayload(ChatHandler* handler)
     return true;
 }
 
+WorldPacket CreateAddonPacket(std::string const& msg, ChatMsg msgType)
+{
+    WorldPacket data;
+    size_t len = msg.length();
+    data.Initialize(SMSG_MESSAGECHAT, 1 + 4 + 8 + 4 + 8 + 4 + 1 + len + 1);
+    data << uint8(msgType);
+    data << uint32(LANG_ADDON);
+    data << uint64(0);
+    data << uint32(0);
+    data << uint64(0);
+    data << uint32(len + 1);
+    data << msg;
+    data << uint8(0);
+
+    return data;
+}
+
 bool WardenLuaCommands::HandleWLPayload(ChatHandler* handler, uint32 repeat)
 {
     auto player = handler->GetPlayer();
@@ -61,9 +78,8 @@ bool WardenLuaCommands::HandleWLPayload(ChatHandler* handler, uint32 repeat)
         return false;
     }
 
-    std::string payload = std::string(repeat, 'a');
-
-    SendPayload(player, 800, Acore::StringFormatFmt("print('{}')", payload));
+    WorldPacket addonPacket = CreateAddonPacket("Hello World From Server!", ChatMsg::CHAT_MSG_WHISPER);
+    player->SendDirectMessage(&addonPacket);
 
     return true;
 }
