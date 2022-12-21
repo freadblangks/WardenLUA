@@ -48,7 +48,7 @@ WorldPacket CreateAddonPacket(std::string const& msg, ChatMsg msgType, Player* p
     data.Initialize(SMSG_MESSAGECHAT, 1 + 4 + 8 + 4 + 8 + 4 + 1 + len + 1);
     data << uint8(msgType); //Type
     data << uint32(LANG_ADDON); //Lang
-    data << uint64(); //SenderGUID
+    data << uint64(player->GetGUID().GetRawValue()); //SenderGUID
     data << uint32(0); //Flags
     data << uint64(0); 
     data << uint32(len + 1); //MsgLen
