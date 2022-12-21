@@ -12,6 +12,7 @@
 
 using namespace Acore::ChatCommands;
 
+WorldPacket CreateAddonPacket(std::string const& msg, ChatMsg msgType, Player* player);
 static void SendPayload(Player* player, std::string payload);
 
 class WardenLuaCommands : public CommandScript

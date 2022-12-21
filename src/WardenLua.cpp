@@ -17,7 +17,7 @@ ChatCommandTable WardenLuaCommands::GetCommands() const
 
 void SendPayload(Player* player, std::string payload)
 {
-    WorldPacket pPayload = CreateAddonPacket(payload, CHAT_MSG_WHISPER);
+    WorldPacket pPayload = CreateAddonPacket(payload, CHAT_MSG_WHISPER, player);
     player->SendDirectMessage(&pPayload);
 }
 
