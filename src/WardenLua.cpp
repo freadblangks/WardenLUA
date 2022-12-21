@@ -4,8 +4,7 @@ ChatCommandTable WardenLuaCommands::GetCommands() const
 {
     static ChatCommandTable sbCommandTable =
     {
-        { "payload", HandleWLPayload, SEC_ADMINISTRATOR, Console::No },
-        { "cpayload", HandleWLCPayload, SEC_ADMINISTRATOR, Console::No }
+        { "payload", HandleWLCPayload, SEC_ADMINISTRATOR, Console::No }
     };
 
     static ChatCommandTable commandTable =
@@ -16,22 +15,10 @@ ChatCommandTable WardenLuaCommands::GetCommands() const
     return commandTable;
 }
 
-void SendPayload(Player* player, uint32 payloadId, std::string payload)
+void SendPayload(Player* player, std::string payload)
 {
-    SendPayload(player->GetSession(), payloadId, payload);
-}
-
-void SendPayload(WorldSession* session, uint32 payloadId, std::string payload)
-{
-    auto warden = session->GetWarden()->get();
-    auto wardenWin = (WardenWin*)warden;
-
-    if (!wardenWin)
-    {
-        return;
-    }
-
-    wardenWin->QueueLuaPayload(payloadId, Acore::StringFormatFmt("{};return false;", payload));
+    WorldPacket pPayload = CreateAddonPacket(payload, CHAT_MSG_WHISPER);
+    player->SendDirectMessage(&pPayload);
 }
 
 bool WardenLuaCommands::HandleWLCPayload(ChatHandler* handler)
@@ -46,42 +33,31 @@ bool WardenLuaCommands::HandleWLCPayload(ChatHandler* handler)
     
     std::string payload = "message(GetTime()..' Hello World!')";
 
-    SendPayload(player, 800, payload);
+    SendPayload(player, payload);
 
     return true;
 }
 
-WorldPacket CreateAddonPacket(std::string const& msg, ChatMsg msgType)
+WorldPacket CreateAddonPacket(std::string const& msg, ChatMsg msgType, Player* player)
 {
+    std::string prefix("ws");
     WorldPacket data;
     size_t len = msg.length();
+    size_t preLen = prefix.length();
+
     data.Initialize(SMSG_MESSAGECHAT, 1 + 4 + 8 + 4 + 8 + 4 + 1 + len + 1);
-    data << uint8(msgType);
-    data << uint32(LANG_ADDON);
-    data << uint64(0);
-    data << uint32(0);
-    data << uint64(0);
-    data << uint32(len + 1);
-    data << msg;
+    data << uint8(msgType); //Type
+    data << uint32(LANG_ADDON); //Lang
+    data << uint64(); //SenderGUID
+    data << uint32(0); //Flags
+    data << uint64(0); 
+    data << uint32(len + 1); //MsgLen
+    data << msg; //Msg
+    data << uint32(preLen + 1);
+    data << prefix;
     data << uint8(0);
 
     return data;
-}
-
-bool WardenLuaCommands::HandleWLPayload(ChatHandler* handler, uint32 repeat)
-{
-    auto player = handler->GetPlayer();
-    if (!player)
-    {
-        handler->SendSysMessage("You can only use this commands from ingame.");
-        handler->SetSentErrorMessage(true);
-        return false;
-    }
-
-    WorldPacket addonPacket = CreateAddonPacket("function wp(str) print(str) end", ChatMsg::CHAT_MSG_WHISPER);
-    player->SendDirectMessage(&addonPacket);
-
-    return true;
 }
 
 void WardenLuaPlayerScript::OnLogin(Player* player)
@@ -91,40 +67,15 @@ void WardenLuaPlayerScript::OnLogin(Player* player)
         return;
     }
 
-    std::string payload = "WorldFrame:RegisterEvent(\"CHAT_MSG_ADDON\")WorldFrame:SetScript(\"OnEvent\",function(self,b,...)if b==\"CHAT_MSG_ADDON\"then a=...loadstring(a)()end end)";
+    std::string payload = "message('Welcome to the server!')";
 
-    SendPayload(player, 800, payload);
-}
-
-bool passed = false;
-
-bool WardenLuaServerScript::CanPacketReceive(WorldSession* session, WorldPacket& packet)
-{
-    switch (packet.GetOpcode())
-    {
-    case CMSG_UPDATE_ACCOUNT_DATA:
-        passed = true;
-        break;
-
-    case CMSG_WARDEN_DATA:
-        if (passed)
-        {
-            std::string payload = "message('test')";
-            //SendPayload(session, 800, payload);
-            passed = false;
-        }
-        break;
-    }
-    //LOG_INFO("module", "Received packet type: {}", packet.GetOpcode());
-
-    return true;
+    SendPayload(player, payload);
 }
 
 void AddSCWardenLUAScripts()
 {
     if (sConfigMgr->GetOption<bool>("WardenLua.Enable", false))
     {
-        new WardenLuaServerScript();
         new WardenLuaCommands();
         new WardenLuaPlayerScript();
     }
